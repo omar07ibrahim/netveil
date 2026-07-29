@@ -48,6 +48,17 @@ class PackagingContractTests(unittest.TestCase):
         self.assertGreaterEqual(len(pins), 4)
         self.assertTrue(all(line.count("==") == 1 for line in pins))
 
+    def test_package_metadata_identifies_omar_and_public_project_links(self) -> None:
+        document = tomllib.loads((ROOT / "pyproject.toml").read_text())
+        project = document["project"]
+
+        self.assertEqual(project["authors"], [{"name": "Omar Ibrahim"}])
+        self.assertEqual(
+            project["urls"]["Repository"],
+            "https://github.com/omar07ibrahim/Hello-World",
+        )
+        self.assertIn("Typing :: Typed", project["classifiers"])
+
 
 if __name__ == "__main__":
     unittest.main()

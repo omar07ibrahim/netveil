@@ -153,3 +153,23 @@ wheel installation. The gate must bind:
 Coordinated code-plus-`RECORD` mutations belong in negative trust-boundary
 evidence: they must be shown as accepted, not misleadingly presented as
 attacks the unsigned guard prevents.
+
+## Release-evidence trust boundary
+
+The release builder and verifier establish an internally consistent chain:
+clean Git `HEAD` to `git archive`, wheel and canonical sdist bytes, fresh
+installation, selected installed files, executed checks, and normalized
+process/network trace facts. The release inventory also carries the exact
+safe sdist member inventory.
+
+That chain is unsigned. It trusts the checked-out builder, verifier, and
+renderer sources; Git and `git archive`; CPython, `build`, and setuptools;
+pip and ensurepip; `strace`; the operating system and filesystem; and the
+channel used to publish the resulting digests. It does not prove that those
+components were unmodified, that the build or CI host was honest, or that the
+person publishing the manifest is Omar. Publisher authentication remains an
+external release-channel responsibility.
+
+The verifier publishes a digest of normalized, path-free trace facts together
+with the exact exec counts and zero network/child-process counts. It does not
+publish or claim a digest of the temporary raw `strace` files.

@@ -210,6 +210,64 @@ environment: it accepts an exact wheel, installs it into a fresh venv with
 `--no-index --no-deps`, and exercises startup injection, bytecode, tamper,
 determinism, and redaction cases.
 
+## Reproducible release evidence
+
+The publication gate requires Git, CPython 3.12, the pinned development
+packages above, and Linux `strace`. Run it only from a clean checkout. The
+builder enforces a clean Git top-level, exports the exact `HEAD` with
+`git archive`, and rejects an output directory inside the source tree.
+
+```bash
+set -eu
+
+COMMIT=$(git rev-parse --verify 'HEAD^{commit}')
+SOURCE_DATE_EPOCH=$(git show -s --format=%ct "$COMMIT")
+OUT="$(dirname "$PWD")/netveil-release-${COMMIT}"
+test ! -e "$OUT"
+
+.venv/bin/python tools/build_release.py \
+  "$PWD" "$OUT" \
+  --source-date-epoch "$SOURCE_DATE_EPOCH" \
+  --python "$PWD/.venv/bin/python"
+
+VERIFY_TMP="$OUT/.fresh-wheel-verification.json.tmp"
+.venv/bin/python tools/verify_fresh_wheel.py \
+  --source-commit "$COMMIT" \
+  --inventory "$OUT/release-inventory.json" \
+  --sdist "$OUT/netveil_audit-0.3.0.tar.gz" \
+  "$OUT/netveil_audit-0.3.0-py3-none-any.whl" > "$VERIFY_TMP"
+mv "$VERIFY_TMP" "$OUT/fresh-wheel-verification.json"
+```
+
+The verifier reads the actual wheel, sdist, and canonical inventory; installs
+the pinned wheel into a fresh no-dependency environment; runs startup,
+bytecode, tamper, deterministic-output, redaction, public-demo, and syscall
+checks; and emits one path-free canonical JSON line.
+
+To refresh the committed evidence views after a successful exact-commit run:
+
+```bash
+mkdir -p docs/evidence
+cp -- "$OUT/release-inventory.json" \
+  docs/evidence/release-inventory.json
+cp -- "$OUT/fresh-wheel-verification.json" \
+  docs/evidence/fresh-wheel-verification.json
+
+.venv/bin/python tools/render_evidence.py
+.venv/bin/python tools/render_evidence.py --check
+```
+
+Repeat the build into a second nonexistent sibling directory and compare the
+wheel, sdist, and inventory bytes when testing build reproducibility.
+
+These JSON files are unsigned consistency and execution evidence, not a
+signature or remote attestation. Their trusted computing base includes the
+checked-out verifier, Git and `git archive`, CPython, `build`, setuptools,
+pip/ensurepip, `strace`, the OS, and filesystem. They cannot prove that the
+verifier or host was honest. Publish artifact digests through a separately
+authenticated channel. The recorded trace hash covers normalized path-free
+facts, not the temporary raw `strace` bytes.
+
 ## Deliberate exclusions
 
 Netveil is not a scanner, proxy checker, service-discovery client, reachability

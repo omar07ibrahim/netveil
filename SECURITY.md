@@ -123,6 +123,13 @@ one exact artifact and runtime. That trace is evidence for the recorded run,
 not a guarantee about a compromised trusted interpreter, shell, operating
 system, or preload mechanism.
 
+Release inventory and fresh-wheel verification JSON are unsigned. They bind a
+builder-observed clean commit to exact artifact and executed-test facts, but
+they do not authenticate the publisher, attest the build host, or prove that
+Git, the verifier, build backend, installer, `strace`, OS, and filesystem were
+honest. Obtain published artifact digests through a separately authenticated
+channel.
+
 Netveil is not a scanner or reachability tester. Historical Git commits
 contain unverified public endpoint strings removed from the current tree.
 Their existence does not grant permission to connect to, probe, or test those
