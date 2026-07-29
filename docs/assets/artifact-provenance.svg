@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="825" viewBox="0 0 1440 825" role="img" aria-labelledby="title description">
+<title id="title">Netveil release evidence chain</title>
+<desc id="description">Source commit, artifact inventory, installed-file, and fresh execution evidence with an explicit unsigned non-claim.</desc>
+<style>
+.bg{fill:#07111f}
+.panel{fill:#101d31;stroke:#29405e;stroke-width:1.5}
+.panel-alt{fill:#0c1728;stroke:#29405e;stroke-width:1.5}
+.title{fill:#f4f8ff;font:700 30px DejaVu Sans,Arial,sans-serif}
+.subtitle{fill:#a8b7c9;font:15px DejaVu Sans,Arial,sans-serif}
+.label{fill:#f4f8ff;font:600 16px DejaVu Sans,Arial,sans-serif}
+.small{fill:#a8b7c9;font:13px DejaVu Sans,Arial,sans-serif}
+.mono{fill:#f4f8ff;font:13px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.mono-small{fill:#a8b7c9;font:12px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.pass{fill:#86efac;font:600 13px DejaVu Sans,Arial,sans-serif}
+.warn{fill:#fcd34d;font:600 13px DejaVu Sans,Arial,sans-serif}
+</style>
+<rect class="bg" width="1440" height="825" rx="18"/>
+<text x="48" y="56" class="title">Release evidence chain</text>
+<text x="48" y="86" class="subtitle">Every displayed value comes from the canonical release inventory or fresh-wheel verifier JSON.</text>
+<rect x="48" y="140" width="306" height="190" rx="14" class="panel"/>
+<rect x="48" y="140" width="306" height="5" rx="3" fill="#67e8f9"/>
+<text x="70" y="182" class="label">1 · clean Git HEAD</text>
+<text x="70" y="222" class="mono-small">f3e4db737c4fd87b4b58f842a926ebb0f9889e69</text>
+<text x="70" y="252" class="mono-small">SOURCE_DATE_EPOCH 1785338401</text>
+<text x="70" y="300" class="pass">BUILDER-OBSERVED</text>
+<line x1="354" y1="235" x2="384" y2="235" stroke="#67e8f9" stroke-width="2"/>
+<path d="M384,229 L396,235 L384,241 Z" fill="#67e8f9"/>
+<rect x="390" y="140" width="306" height="190" rx="14" class="panel"/>
+<rect x="390" y="140" width="306" height="5" rx="3" fill="#c4b5fd"/>
+<text x="412" y="182" class="label">2 · bound release artifacts</text>
+<text x="412" y="222" class="mono-small">wheel · 25.8 KiB · 0f4254362623a344e247…</text>
+<text x="412" y="252" class="mono-small">sdist · 105.3 KiB · 51 members</text>
+<text x="412" y="300" class="pass">BOUND IN EVIDENCE</text>
+<line x1="696" y1="235" x2="726" y2="235" stroke="#67e8f9" stroke-width="2"/>
+<path d="M726,229 L738,235 L726,241 Z" fill="#67e8f9"/>
+<rect x="732" y="140" width="306" height="190" rx="14" class="panel"/>
+<rect x="732" y="140" width="306" height="5" rx="3" fill="#86efac"/>
+<text x="754" y="182" class="label">3 · fresh installed state</text>
+<text x="754" y="222" class="mono-small">launcher 0711 · 8.5 KiB</text>
+<text x="754" y="252" class="mono-small">RECORD 0600 · 13 selected rows</text>
+<text x="754" y="300" class="pass">BOUND IN EVIDENCE</text>
+<line x1="1038" y1="235" x2="1068" y2="235" stroke="#67e8f9" stroke-width="2"/>
+<path d="M1068,229 L1080,235 L1068,241 Z" fill="#67e8f9"/>
+<rect x="1074" y="140" width="306" height="190" rx="14" class="panel"/>
+<rect x="1074" y="140" width="306" height="5" rx="3" fill="#fcd34d"/>
+<text x="1096" y="182" class="label">4 · executed evidence</text>
+<text x="1096" y="222" class="mono-small">19 checks pass</text>
+<text x="1096" y="252" class="mono-small">2 traces · network 0 · children 0</text>
+<text x="1096" y="300" class="pass">BOUND IN EVIDENCE</text>
+<rect x="48" y="380" width="1344" height="210" rx="14" class="panel-alt"/>
+<text x="78" y="425" class="label">Exact installed bindings</text>
+<text x="78" y="462" class="mono-small">launcher sha256  056f2721f16c78e7fe0c24cf91e277be6ac9a71858756775c4c1f4df038dd3ac</text>
+<text x="78" y="492" class="mono-small">RECORD sha256    88c0fe5e9468c9b99aeac359f8a7b71df99b546e4ba73cdce8561cfe5fc002e0</text>
+<text x="78" y="540" class="mono-small">inventory sha256 e41685491e63cdfb8860ec7cce48ca1f8743da6d29cc7b5d3c398f738c1c6622</text>
+<rect x="48" y="630" width="1344" height="145" rx="14" class="panel"/>
+<text x="78" y="674" class="warn">Claim boundary</text>
+<text x="78" y="709" class="small">The manifest is unsigned. It shows internally consistent bytes and an executed test run; it does not prove publisher identity, an honest host, or an unmodified verifier.</text>
+<text x="78" y="741" class="small">Authenticate the published artifact digests through a separate trusted channel.</text>
+</svg>

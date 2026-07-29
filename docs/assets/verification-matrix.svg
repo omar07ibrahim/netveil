@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="906" viewBox="0 0 1440 906" role="img" aria-labelledby="title description">
+<title id="title">Netveil fresh-wheel verification matrix</title>
+<desc id="description">All verifier pass labels, interpreter and platform identity, and normalized path-free process and network trace evidence.</desc>
+<style>
+.bg{fill:#07111f}
+.panel{fill:#101d31;stroke:#29405e;stroke-width:1.5}
+.panel-alt{fill:#0c1728;stroke:#29405e;stroke-width:1.5}
+.title{fill:#f4f8ff;font:700 30px DejaVu Sans,Arial,sans-serif}
+.subtitle{fill:#a8b7c9;font:15px DejaVu Sans,Arial,sans-serif}
+.label{fill:#f4f8ff;font:600 16px DejaVu Sans,Arial,sans-serif}
+.small{fill:#a8b7c9;font:13px DejaVu Sans,Arial,sans-serif}
+.mono{fill:#f4f8ff;font:13px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.mono-small{fill:#a8b7c9;font:12px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.pass{fill:#86efac;font:600 13px DejaVu Sans,Arial,sans-serif}
+.warn{fill:#fcd34d;font:600 13px DejaVu Sans,Arial,sans-serif}
+</style>
+<rect class="bg" width="1440" height="906" rx="18"/>
+<text x="48" y="56" class="title">Fresh-wheel verification matrix</text>
+<text x="48" y="86" class="subtitle">19 exact checks reported pass by the committed verifier JSON.</text>
+<rect x="48" y="120" width="1344" height="120" rx="14" class="panel"/>
+<text x="78" y="160" class="label">cpython 3.12.3 · cpython-312</text>
+<text x="78" y="194" class="small">Linux 6.17.0-1019-aws · x86_64</text>
+<text x="1360" y="160" text-anchor="end" class="mono">f3e4db737c4fd87b4b58f842a926ebb0f9889e69</text>
+<text x="1360" y="194" text-anchor="end" class="warn">unsigned consistency evidence · not attestation</text>
+<rect x="48" y="270" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="291" r="7" fill="#86efac"/>
+<text x="90" y="296" class="small">wheel archive</text>
+<text x="446" y="296" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="270" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="291" r="7" fill="#86efac"/>
+<text x="538" y="296" class="small">fresh install</text>
+<text x="894" y="296" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="270" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="291" r="7" fill="#86efac"/>
+<text x="986" y="296" class="small">entry points absent</text>
+<text x="1342" y="296" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="328" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="349" r="7" fill="#86efac"/>
+<text x="90" y="354" class="small">launcher identity</text>
+<text x="446" y="354" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="328" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="349" r="7" fill="#86efac"/>
+<text x="538" y="354" class="small">direct and path commands</text>
+<text x="894" y="354" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="328" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="349" r="7" fill="#86efac"/>
+<text x="986" y="354" class="small">isolated startup</text>
+<text x="1342" y="354" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="386" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="407" r="7" fill="#86efac"/>
+<text x="90" y="412" class="small">environment injection inert</text>
+<text x="446" y="412" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="386" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="407" r="7" fill="#86efac"/>
+<text x="538" y="412" class="small">unchecked bytecode inert</text>
+<text x="894" y="412" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="386" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="407" r="7" fill="#86efac"/>
+<text x="986" y="412" class="small">unknown bytecode rejected</text>
+<text x="1342" y="412" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="444" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="465" r="7" fill="#86efac"/>
+<text x="90" y="470" class="small">tamper fail closed</text>
+<text x="446" y="470" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="444" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="465" r="7" fill="#86efac"/>
+<text x="538" y="470" class="small">metadata drift rejected</text>
+<text x="894" y="470" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="444" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="465" r="7" fill="#86efac"/>
+<text x="986" y="470" class="small">coordinated bootstrap record mutation accepted</text>
+<text x="1342" y="470" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="502" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="523" r="7" fill="#86efac"/>
+<text x="90" y="528" class="small">unknown package file rejected</text>
+<text x="446" y="528" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="502" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="523" r="7" fill="#86efac"/>
+<text x="538" y="528" class="small">receipt deterministic</text>
+<text x="894" y="528" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="502" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="523" r="7" fill="#86efac"/>
+<text x="986" y="528" class="small">receipt redacted</text>
+<text x="1342" y="528" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="560" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="581" r="7" fill="#86efac"/>
+<text x="90" y="586" class="small">public demo capture</text>
+<text x="446" y="586" text-anchor="end" class="pass">PASS</text>
+<rect x="496" y="560" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="518" cy="581" r="7" fill="#86efac"/>
+<text x="538" y="586" class="small">syscall trace offline</text>
+<text x="894" y="586" text-anchor="end" class="pass">PASS</text>
+<rect x="944" y="560" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="966" cy="581" r="7" fill="#86efac"/>
+<text x="986" y="586" class="small">release inventory integrity</text>
+<text x="1342" y="586" text-anchor="end" class="pass">PASS</text>
+<rect x="48" y="618" width="420" height="42" rx="10" class="panel-alt"/>
+<circle cx="70" cy="639" r="7" fill="#86efac"/>
+<text x="90" y="644" class="small">source commit bound</text>
+<text x="446" y="644" text-anchor="end" class="pass">PASS</text>
+<text x="48" y="706" class="label">Normalized offline syscall evidence</text>
+<rect x="48" y="730" width="650" height="105" rx="12" class="panel"/>
+<text x="72" y="764" class="label">receipt</text>
+<text x="72" y="791" class="mono-small">exec=2 · network=0 · post-launch children=0</text>
+<text x="72" y="816" class="mono-small">normalized sha256 0cdfc79931d31b9665f522437c58fb2df4b7a30cfdf69fccec996a206b35721a</text>
+<rect x="728" y="730" width="650" height="105" rx="12" class="panel"/>
+<text x="752" y="764" class="label">version</text>
+<text x="752" y="791" class="mono-small">exec=2 · network=0 · post-launch children=0</text>
+<text x="752" y="816" class="mono-small">normalized sha256 f49c6be35c867adf767a07fcd01788478f57ecfddee88550f992f9275d3d7b57</text>
+</svg>

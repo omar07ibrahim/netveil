@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="830" viewBox="0 0 1440 830" role="img" aria-labelledby="title description">
+<title id="title">Netveil public receipt count evidence</title>
+<desc id="description">Bar chart of physical lines, endpoint counts, IP versions, and duplicate groups parsed from the committed public demo receipt.</desc>
+<style>
+.bg{fill:#07111f}
+.panel{fill:#101d31;stroke:#29405e;stroke-width:1.5}
+.panel-alt{fill:#0c1728;stroke:#29405e;stroke-width:1.5}
+.title{fill:#f4f8ff;font:700 30px DejaVu Sans,Arial,sans-serif}
+.subtitle{fill:#a8b7c9;font:15px DejaVu Sans,Arial,sans-serif}
+.label{fill:#f4f8ff;font:600 16px DejaVu Sans,Arial,sans-serif}
+.small{fill:#a8b7c9;font:13px DejaVu Sans,Arial,sans-serif}
+.mono{fill:#f4f8ff;font:13px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.mono-small{fill:#a8b7c9;font:12px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.pass{fill:#86efac;font:600 13px DejaVu Sans,Arial,sans-serif}
+.warn{fill:#fcd34d;font:600 13px DejaVu Sans,Arial,sans-serif}
+</style>
+<rect class="bg" width="1440" height="830" rx="18"/>
+<text x="48" y="56" class="title">Public receipt · disclosed counts</text>
+<text x="48" y="86" class="subtitle">Values parsed from the exact verifier-captured receipt; identifiers and raw endpoints are not used in this chart.</text>
+<rect x="48" y="120" width="1344" height="470" rx="14" class="panel"/>
+<text x="78" y="191" class="label">physical lines</text>
+<rect x="310" y="175" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="175" width="820.00" height="24" rx="7" fill="#67e8f9"/>
+<text x="1195" y="192" class="mono">6</text>
+<text x="78" y="253" class="label">endpoint occurrences</text>
+<rect x="310" y="237" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="237" width="683.33" height="24" rx="7" fill="#c4b5fd"/>
+<text x="1195" y="254" class="mono">5</text>
+<text x="78" y="315" class="label">unique endpoints</text>
+<rect x="310" y="299" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="299" width="546.67" height="24" rx="7" fill="#86efac"/>
+<text x="1195" y="316" class="mono">4</text>
+<text x="78" y="377" class="label">IPv4 occurrences</text>
+<rect x="310" y="361" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="361" width="546.67" height="24" rx="7" fill="#38bdf8"/>
+<text x="1195" y="378" class="mono">4</text>
+<text x="78" y="439" class="label">IPv6 occurrences</text>
+<rect x="310" y="423" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="423" width="136.67" height="24" rx="7" fill="#f472b6"/>
+<text x="1195" y="440" class="mono">1</text>
+<text x="78" y="501" class="label">duplicate groups</text>
+<rect x="310" y="485" width="860" height="24" rx="7" fill="#07111f"/>
+<rect x="310" y="485" width="136.67" height="24" rx="7" fill="#fcd34d"/>
+<text x="1195" y="502" class="mono">1</text>
+<rect x="48" y="620" width="660" height="160" rx="14" class="panel-alt"/>
+<text x="78" y="660" class="label">Scope result</text>
+<text x="78" y="695" class="mono">5 / 5 occurrences · documentation ranges</text>
+<text x="78" y="730" class="small">Synthetic corpus only; this is workflow evidence, not a claim about live infrastructure.</text>
+<rect x="732" y="620" width="660" height="160" rx="14" class="panel-alt"/>
+<text x="762" y="660" class="label">Disclosure boundary</text>
+<text x="762" y="695" class="mono">129 source bytes are summarized, not embedded</text>
+<text x="762" y="730" class="small">Counts, equality and frequency remain public; pseudonymized does not mean anonymous.</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="644" viewBox="0 0 1440 644" role="img" aria-labelledby="title description">
+<title id="title">Netveil installed CLI evidence</title>
+<desc id="description">Terminal rendering of exact version and receipt standard output captured from the verified fresh wheel.</desc>
+<style>
+.bg{fill:#07111f}
+.panel{fill:#101d31;stroke:#29405e;stroke-width:1.5}
+.panel-alt{fill:#0c1728;stroke:#29405e;stroke-width:1.5}
+.title{fill:#f4f8ff;font:700 30px DejaVu Sans,Arial,sans-serif}
+.subtitle{fill:#a8b7c9;font:15px DejaVu Sans,Arial,sans-serif}
+.label{fill:#f4f8ff;font:600 16px DejaVu Sans,Arial,sans-serif}
+.small{fill:#a8b7c9;font:13px DejaVu Sans,Arial,sans-serif}
+.mono{fill:#f4f8ff;font:13px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.mono-small{fill:#a8b7c9;font:12px DejaVu Sans Mono,ui-monospace,SFMono-Regular,Consolas,monospace}
+.pass{fill:#86efac;font:600 13px DejaVu Sans,Arial,sans-serif}
+.warn{fill:#fcd34d;font:600 13px DejaVu Sans,Arial,sans-serif}
+</style>
+<rect class="bg" width="1440" height="644" rx="18"/>
+<text x="48" y="56" class="title">Installed CLI · captured stdout</text>
+<text x="48" y="86" class="subtitle">Exact successful output captured by the fresh-wheel verifier; long canonical JSON is visually wrapped only.</text>
+<rect x="48" y="116" width="1344" height="484" rx="14" fill="#020817" stroke="#29405e"/>
+<circle cx="76" cy="142" r="6" fill="#fb7185"/>
+<circle cx="97" cy="142" r="6" fill="#f59e0b"/>
+<circle cx="118" cy="142" r="6" fill="#34d399"/>
+<text x="72" y="180" class="mono" fill="#f4f8ff">Netveil installed-wheel public demonstration</text>
+<text x="72" y="201" class="mono" fill="#f4f8ff">source commit: f3e4db737c4fd87b4b58f842a926ebb0f9889e69</text>
+<text x="72" y="222" class="mono" fill="#f4f8ff">input class: synthetic IETF documentation ranges</text>
+<text x="72" y="243" class="mono" fill="#f4f8ff">key class: public non-secret test material</text>
+<text x="72" y="264" class="mono" fill="#f4f8ff"></text>
+<text x="72" y="285" class="mono" fill="#67e8f9">$ netveil-audit --version</text>
+<text x="72" y="306" class="mono" fill="#f4f8ff">netveil-audit 0.3.0</text>
+<text x="72" y="327" class="mono" fill="#67e8f9">$ netveil-audit receipt documentation-corpus.txt --key-file public-demo.key</text>
+<text x="72" y="348" class="mono" fill="#f4f8ff">{&quot;canonicalization&quot;:&quot;netveil.sorted-keys-json.v1&quot;,&quot;protocol&quot;:&quot;netveil.hmac-sha256-pseudonymization.v1&quot;,&quot;report&quot;:{&quot;canonicaliza</text>
+<text x="72" y="369" class="mono" fill="#f4f8ff">  tion&quot;:&quot;netveil.sorted-keys-json.v1&quot;,&quot;counts&quot;:{&quot;endpoint_occurrences&quot;:5,&quot;physical_lines&quot;:6,&quot;source_bytes&quot;:129,&quot;unique_endpoin</text>
+<text x="72" y="390" class="mono" fill="#f4f8ff">  ts&quot;:4},&quot;duplicates&quot;:{&quot;extra_occurrences&quot;:1,&quot;group_count&quot;:1,&quot;groups&quot;:[{&quot;extra_occurrences&quot;:1,&quot;id&quot;:&quot;nvd1_f382d197a21771fcdbc8d</text>
+<text x="72" y="411" class="mono" fill="#f4f8ff">  a8d818d4612a6a6bf7d8ca45415298f475b5709da10&quot;,&quot;occurrences&quot;:2}]},&quot;endpoint_occurrences_by_ip_version&quot;:{&quot;ipv4&quot;:4,&quot;ipv6&quot;:1},&quot;en</text>
+<text x="72" y="432" class="mono" fill="#f4f8ff">  dpoint_occurrences_by_port_bucket&quot;:{&quot;dynamic_49152_65535&quot;:1,&quot;registered_1024_49151&quot;:1,&quot;system_1_1023&quot;:3},&quot;endpoint_occurrenc</text>
+<text x="72" y="453" class="mono" fill="#f4f8ff">  es_by_scope&quot;:{&quot;documentation&quot;:5,&quot;global&quot;:0,&quot;link_local&quot;:0,&quot;loopback&quot;:0,&quot;multicast&quot;:0,&quot;private&quot;:0,&quot;reserved&quot;:0,&quot;shared&quot;:0,&quot;si</text>
+<text x="72" y="474" class="mono" fill="#f4f8ff">  te_local&quot;:0,&quot;unspecified&quot;:0},&quot;protocol&quot;:&quot;netveil.hmac-sha256-pseudonymization.v1&quot;,&quot;runtime&quot;:{&quot;endpoint_semantics&quot;:&quot;python-st</text>
+<text x="72" y="495" class="mono" fill="#f4f8ff">  dlib-ipaddress&quot;,&quot;python_implementation&quot;:&quot;cpython&quot;,&quot;python_version&quot;:&quot;3.12.3&quot;,&quot;schema&quot;:&quot;netveil.python-runtime.v1&quot;},&quot;schema&quot;:&quot;</text>
+<text x="72" y="516" class="mono" fill="#f4f8ff">  netveil.aggregate-report.v1&quot;,&quot;source_content_id&quot;:&quot;nvs1_db2e7cafc475293724cdaa15fd267fd750a46f33ea199091a14cfa7635523e31&quot;},&quot;r</text>
+<text x="72" y="537" class="mono" fill="#f4f8ff">  eport_digest&quot;:{&quot;algorithm&quot;:&quot;sha256&quot;,&quot;value&quot;:&quot;e266ff9c6b81df76e9224772d67958be75b90b9a8ac67161182cf39985b76f1e&quot;},&quot;schema&quot;:&quot;ne</text>
+<text x="72" y="558" class="mono" fill="#f4f8ff">  tveil.aggregate-receipt.v1&quot;}</text>
+</svg>

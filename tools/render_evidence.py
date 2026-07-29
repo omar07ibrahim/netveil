@@ -910,7 +910,7 @@ def _render_provenance(facts: EvidenceFacts) -> bytes:
         ),
         (
             390,
-            "2 · deterministic artifacts",
+            "2 · bound release artifacts",
             f"wheel · {_human_bytes(wheel.size_bytes)} · {wheel.sha256[:20]}…",
             (
                 f"sdist · {_human_bytes(sdist.size_bytes)} · "
@@ -1001,7 +1001,7 @@ def _render_provenance(facts: EvidenceFacts) -> bytes:
     return _svg_document(
         title="Netveil release evidence chain",
         description=(
-            "Source commit, deterministic artifact, installed-file, and "
+            "Source commit, artifact inventory, installed-file, and "
             "fresh execution evidence with an explicit unsigned non-claim."
         ),
         width=1440,

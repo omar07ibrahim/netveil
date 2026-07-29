@@ -36,6 +36,13 @@ Receipt disclosure is still a decision: sizes, category totals, duplicate
 equality, and duplicate frequency remain visible. Pseudonymized does not mean
 anonymous.
 
+![Counts disclosed by the verifier-captured public receipt](docs/assets/receipt-counts.svg)
+
+_This chart is generated from the exact successful receipt captured by the
+fresh-wheel verifier. The six-line corpus uses only synthetic IETF
+documentation ranges; the chart is evidence of the workflow, not a claim about
+live infrastructure._
+
 ## Installed workflow
 
 Use an exact wheel in a fresh standard POSIX virtual environment. Verify its
@@ -87,6 +94,13 @@ hard-code it, reuse a corpus as a key, or commit it. Netveil requires 32–4096
 bytes, effective-user ownership, exactly one hard link, and owner-only
 permissions. The complete file and exit-code contract is in
 [docs/cli-contract.md](docs/cli-contract.md).
+
+![Exact stdout captured from the installed wheel](docs/assets/cli-session.svg)
+
+_This is a deterministic rendering of actual stdout from the verified wheel,
+not a typed mockup. The same capture is committed as an
+[asciinema v2 terminal recording](docs/evidence/cli-session.cast); replay it
+with `asciinema play docs/evidence/cli-session.cast`._
 
 ## How the guard works
 
@@ -212,6 +226,8 @@ determinism, and redaction cases.
 
 ## Reproducible release evidence
 
+![Source-to-execution artifact provenance](docs/assets/artifact-provenance.svg)
+
 The publication gate requires Git, CPython 3.12, the pinned development
 packages above, and Linux `strace`. Run it only from a clean checkout. The
 builder enforces a clean Git top-level, exports the exact `HEAD` with
@@ -243,6 +259,22 @@ The verifier reads the actual wheel, sdist, and canonical inventory; installs
 the pinned wheel into a fresh no-dependency environment; runs startup,
 bytecode, tamper, deterministic-output, redaction, public-demo, and syscall
 checks; and emits one path-free canonical JSON line.
+
+![Fresh-wheel verification matrix](docs/assets/verification-matrix.svg)
+
+The committed snapshot records exact source commit
+`f3e4db737c4fd87b4b58f842a926ebb0f9889e69`: all 19 verifier checks passed,
+both normalized Linux traces recorded zero network syscalls and zero
+post-launch child processes, and the installed launcher and `RECORD` identities
+were captured. Inspect the canonical
+[release inventory](docs/evidence/release-inventory.json), the [fresh-wheel
+verification record](docs/evidence/fresh-wheel-verification.json), and the
+[visual manifest](docs/evidence/visual-manifest.json) rather than trusting the
+rendered summary alone.
+
+`docs/evidence` is deliberately repository-only. Embedding an inventory that
+hashes the sdist inside that same sdist would be self-referential; publish the
+evidence beside the release artifacts, not inside them.
 
 To refresh the committed evidence views after a successful exact-commit run:
 
