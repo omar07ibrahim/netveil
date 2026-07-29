@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "netveil-audit"
-version = "0.1.0"
-description = "Offline fail-closed parser for network-endpoint corpora"
+version = "0.2.0"
+description = "Offline privacy-preserving audits for network-endpoint corpora"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
