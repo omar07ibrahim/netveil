@@ -4,6 +4,7 @@ __pycache__/
 .ruff_cache/
 .mypy_cache/
 .venv/
+.demo-venv/
 .coverage
 *.egg-info/
 dist/
@@ -12,3 +13,6 @@ build/
 # Raw endpoint corpora may contain third-party infrastructure and stay local.
 *.endpoints
 data/raw/
+corpus.txt
+receipt.json
+receipt.key

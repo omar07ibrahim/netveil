@@ -1,2 +1,17 @@
+include LICENSE
+include README.md
 include SECURITY.md
-include docs/privacy-protocol.md
+include requirements-dev.txt
+include pyproject.toml
+include scripts/netveil-audit
+recursive-include docs *.md
+recursive-include docs/assets *.svg *.json *.cast *.gif
+recursive-include src *.py py.typed
+recursive-include tests *.py
+recursive-include tools *.py
+global-exclude *.py[cod]
+global-exclude .coverage
+global-exclude .DS_Store
+global-exclude *~
+prune build
+prune dist

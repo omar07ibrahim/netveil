@@ -1,0 +1,296 @@
+#!/bin/sh
+""":"
+case "$0" in
+    */*) netveil_script_directory=${0%/*} ;;
+    *) exit 70 ;;
+esac
+exec "$netveil_script_directory/python" -IESB "$0" "$@"
+exit 70
+":"""
+
+"""Isolated installed-artifact launcher for Netveil."""
+
+import base64
+import hashlib
+import importlib.metadata
+import os
+import stat
+import sys
+from pathlib import Path, PurePosixPath
+from types import ModuleType
+from typing import Final, NoReturn
+
+_DISTRIBUTION_NAME: Final = "netveil-audit"
+_DISTRIBUTION_VERSION: Final = "0.3.0"
+_BOOTSTRAP_FILE: Final = "netveil_bootstrap.py"
+_LAUNCHER_NAME: Final = "netveil-audit"
+_MAX_ARTIFACT_FILE_BYTES: Final = 1_048_576
+_ARTIFACT_FAILURE_EXIT: Final = 10
+_OUTPUT_FAILURE_EXIT: Final = 15
+_INTERNAL_FAILURE_EXIT: Final = 70
+
+
+class _LaunchFailure(Exception):
+    pass
+
+
+def _fail() -> NoReturn:
+    raise _LaunchFailure
+
+
+def _startup_is_isolated() -> bool:
+    flags = sys.flags
+    return (
+        os.name == "posix"
+        and flags.isolated == 1
+        and flags.no_site == 1
+        and flags.ignore_environment == 1
+        and flags.dont_write_bytecode == 1
+        and flags.safe_path is True
+        and "" not in sys.path
+    )
+
+
+def _file_flags() -> int:
+    required = ("O_CLOEXEC", "O_NOCTTY", "O_NOFOLLOW", "O_NONBLOCK")
+    if any(not hasattr(os, name) for name in required):
+        _fail()
+    return os.O_RDONLY | os.O_CLOEXEC | os.O_NOCTTY | os.O_NOFOLLOW | os.O_NONBLOCK
+
+
+def _identity(status: os.stat_result) -> tuple[int, ...]:
+    return (
+        status.st_dev,
+        status.st_ino,
+        status.st_mode,
+        status.st_uid,
+        status.st_gid,
+        status.st_nlink,
+        status.st_size,
+        status.st_mtime_ns,
+        status.st_ctime_ns,
+    )
+
+
+def _read_record_bound(
+    path: Path,
+    record: importlib.metadata.PackagePath,
+) -> tuple[bytes, tuple[int, ...]]:
+    file_hash = record.hash
+    file_size = record.size
+    if (
+        file_hash is None
+        or file_hash.mode != "sha256"
+        or type(file_size) is not int
+        or file_size < 0
+        or file_size > _MAX_ARTIFACT_FILE_BYTES
+    ):
+        _fail()
+
+    payload, identity = _read_bounded_regular(path)
+    digest = base64.urlsafe_b64encode(hashlib.sha256(payload).digest())
+    digest_text = digest.rstrip(b"=").decode("ascii")
+    if len(payload) != file_size or digest_text != file_hash.value:
+        _fail()
+    return payload, identity
+
+
+def _read_bounded_regular(path: Path) -> tuple[bytes, tuple[int, ...]]:
+    descriptor = -1
+    try:
+        descriptor = os.open(path, _file_flags())
+        before = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(before.st_mode)
+            or before.st_size < 0
+            or before.st_size > _MAX_ARTIFACT_FILE_BYTES
+        ):
+            _fail()
+        chunks: list[bytes] = []
+        observed = 0
+        while observed <= before.st_size:
+            chunk = os.read(
+                descriptor,
+                min(65_536, before.st_size + 1 - observed),
+            )
+            if not chunk:
+                break
+            chunks.append(chunk)
+            observed += len(chunk)
+        payload = b"".join(chunks)
+        after = os.fstat(descriptor)
+    except OSError:
+        _fail()
+    finally:
+        if descriptor >= 0:  # pragma: no branch - acquisition failure re-raises.
+            try:
+                os.close(descriptor)
+            except OSError:
+                _fail()
+
+    if len(payload) != before.st_size or _identity(before) != _identity(after):
+        _fail()
+    return payload, _identity(after)
+
+
+def _site_root(launcher_path: Path) -> Path:
+    if launcher_path.name != _LAUNCHER_NAME or launcher_path.parent.name != "bin":
+        _fail()
+    prefix = launcher_path.parent.parent
+    python_directory = f"python{sys.version_info.major}.{sys.version_info.minor}"
+    library_directories = tuple(dict.fromkeys(("lib", sys.platlibdir)))
+    candidates = tuple(
+        prefix / library / python_directory / package_directory
+        for library in library_directories
+        for package_directory in ("site-packages", "dist-packages")
+    )
+    matches = tuple(
+        candidate
+        for candidate in candidates
+        if (candidate / f"netveil_audit-{_DISTRIBUTION_VERSION}.dist-info").is_dir()
+    )
+    if len(matches) != 1:
+        _fail()
+    return matches[0]
+
+
+def _records(
+    distribution: importlib.metadata.Distribution,
+) -> dict[str, importlib.metadata.PackagePath]:
+    files = distribution.files
+    if files is None:
+        _fail()
+    records: dict[str, importlib.metadata.PackagePath] = {}
+    for record in files:
+        raw_path = str(record)
+        if raw_path in records:
+            _fail()
+        records[raw_path] = record
+    return records
+
+
+def _verified_bootstrap(
+    launcher_path: Path,
+) -> tuple[bytes, Path]:
+    site_root = _site_root(launcher_path)
+    dist_info = site_root / f"netveil_audit-{_DISTRIBUTION_VERSION}.dist-info"
+    _read_bounded_regular(dist_info / "METADATA")
+    _read_bounded_regular(dist_info / "RECORD")
+    try:
+        os.lstat(dist_info / "entry_points.txt")
+    except FileNotFoundError:
+        pass
+    except OSError:
+        _fail()
+    else:
+        _fail()
+    distribution = importlib.metadata.PathDistribution(dist_info)
+    try:
+        name = distribution.metadata["Name"]
+        version = distribution.metadata["Version"]
+    except KeyError:
+        _fail()
+    if name != _DISTRIBUTION_NAME or version != _DISTRIBUTION_VERSION:
+        _fail()
+
+    records = _records(distribution)
+    launcher_record_path = PurePosixPath(
+        os.path.relpath(launcher_path, site_root)
+    ).as_posix()
+    launcher_record = records.get(launcher_record_path)
+    bootstrap_record = records.get(_BOOTSTRAP_FILE)
+    if launcher_record is None or bootstrap_record is None:
+        _fail()
+
+    _, launcher_identity = _read_record_bound(launcher_path, launcher_record)
+    located_launcher = Path(str(distribution.locate_file(launcher_record)))
+    _, located_identity = _read_record_bound(located_launcher, launcher_record)
+    if launcher_identity != located_identity:
+        _fail()
+
+    bootstrap_path = site_root / _BOOTSTRAP_FILE
+    payload, bootstrap_identity = _read_record_bound(
+        bootstrap_path,
+        bootstrap_record,
+    )
+    located_bootstrap = Path(str(distribution.locate_file(bootstrap_record)))
+    _, located_bootstrap_identity = _read_record_bound(
+        located_bootstrap,
+        bootstrap_record,
+    )
+    if bootstrap_identity != located_bootstrap_identity:
+        _fail()
+
+    sys.path.append(str(site_root))
+    return payload, bootstrap_path
+
+
+def _execute_bootstrap(payload: bytes, bootstrap_path: Path) -> int:
+    forbidden = tuple(
+        name
+        for name in sys.modules
+        if name == "netveil_bootstrap"
+        or name == "netveil"
+        or name.startswith("netveil.")
+    )
+    if forbidden:
+        _fail()
+
+    module = ModuleType("netveil_bootstrap")
+    module.__file__ = str(bootstrap_path)
+    module.__package__ = ""
+    sys.modules[module.__name__] = module
+    try:
+        code = compile(
+            payload,
+            str(bootstrap_path),
+            "exec",
+            dont_inherit=True,
+        )
+        exec(code, module.__dict__)  # noqa: S102 - executes RECORD-bound bytes.
+        main = module.main
+        result = main(sys.argv[1:])
+    except BaseException:
+        sys.modules.pop(module.__name__, None)
+        raise
+    if type(result) is not int:
+        _fail()
+    return result
+
+
+def _write_failure(code: str, exit_code: int) -> int:
+    payload = f"netveil-audit: {code}\n"
+    offset = 0
+    try:
+        while offset < len(payload):
+            written = sys.stderr.write(payload[offset:])
+            if (
+                type(written) is not int
+                or written <= 0
+                or written > len(payload) - offset
+            ):
+                return _OUTPUT_FAILURE_EXIT
+            offset += written
+        sys.stderr.flush()
+    except OSError:
+        return _OUTPUT_FAILURE_EXIT
+    return exit_code
+
+
+def main() -> int:
+    try:
+        if not _startup_is_isolated():
+            _fail()
+        launcher_path = Path(__file__).absolute()
+        payload, bootstrap_path = _verified_bootstrap(launcher_path)
+        return _execute_bootstrap(payload, bootstrap_path)
+    except _LaunchFailure:
+        return _write_failure("artifact_unverified", _ARTIFACT_FAILURE_EXIT)
+    except KeyboardInterrupt:
+        return _write_failure("interrupted", _INTERNAL_FAILURE_EXIT)
+    except Exception:  # noqa: BLE001 - never expose launcher tracebacks.
+        return _write_failure("internal_error", _INTERNAL_FAILURE_EXIT)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

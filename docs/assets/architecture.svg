@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1000" viewBox="0 0 1440 1000" role="img" aria-labelledby="title description">
+<title id="title">Netveil installed execution and trust boundary</title>
+<desc id="description">Code-derived architecture from the installed polyglot launcher through pinned source loading to a pseudonymized receipt.</desc>
+<defs>
+<linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07111f"/><stop offset="1" stop-color="#101c2f"/></linearGradient>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#7dd3fc"/></marker>
+</defs>
+<rect width="1440" height="1000" fill="url(#background)"/>
+<text x="70" y="66" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="34" font-weight="750" fill="#d8e3f0">Netveil installed execution boundary</text>
+<text x="70" y="99" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="400" fill="#8fa7bd">Generated from the 0.3.0 launcher, parser, CLI and bootstrap sources</text>
+<rect x="70" y="145" width="390" height="170" rx="16" fill="#33251a" stroke="#f59e0b" stroke-width="2"/>
+<text x="92" y="179" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">1  Trusted startup</text>
+<text x="92" y="209" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">/bin/sh → sibling CPython</text>
+<text x="92" y="233" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">combined flags: -I -E -S -B</text>
+<text x="92" y="257" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">no site hooks • env ignored • safe path</text>
+<text x="92" y="281" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">launcher + installed RECORD are trust roots</text>
+<rect x="525" y="145" width="390" height="170" rx="16" fill="#142a32" stroke="#22d3ee" stroke-width="2"/>
+<text x="547" y="179" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">2  Artifact drift guard</text>
+<text x="547" y="209" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">launcher and bootstrap: installed hash + size</text>
+<text x="547" y="233" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">bounded O_NOFOLLOW descriptor reads</text>
+<text x="547" y="257" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">identity checked before and after read</text>
+<text x="547" y="281" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">installed RECORD is not a signature</text>
+<rect x="980" y="145" width="390" height="170" rx="16" fill="#17273a" stroke="#60a5fa" stroke-width="2"/>
+<text x="1002" y="179" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">3  Closed source loader</text>
+<text x="1002" y="209" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">5 allowed modules</text>
+<text x="1002" y="233" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">pinned source bytes compiled in memory</text>
+<text x="1002" y="257" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">unknown netveil.* imports rejected</text>
+<text x="1002" y="281" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">package bytecode never executes</text>
+<path d="M 460 230 L 525 230" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M 915 230 L 980 230" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="70" y="395" width="600" height="205" rx="16" fill="#1f2038" stroke="#a78bfa" stroke-width="2"/>
+<text x="92" y="429" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">4  Sensitive local inputs</text>
+<text x="92" y="459" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">corpus: regular file • ≤ 8 MiB • ≤ 100,000 lines</text>
+<text x="92" y="483" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">key: owner-only regular file • 32–4,096 exact bytes</text>
+<text x="92" y="507" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">same inode or byte-identical corpus/key rejected</text>
+<text x="92" y="531" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">sensitive values omitted from handled output</text>
+<text x="92" y="555" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">no DNS, socket or child-process workflow</text>
+<rect x="770" y="395" width="600" height="205" rx="16" fill="#173126" stroke="#34d399" stroke-width="2"/>
+<text x="792" y="429" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">5  Public deterministic result</text>
+<text x="792" y="459" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">parse → canonicalize → aggregate</text>
+<text x="792" y="483" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">domain-separated HMAC-SHA256 identifiers</text>
+<text x="792" y="507" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">fixed-schema sorted-key canonical JSON</text>
+<text x="792" y="531" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">receipt digest binds the public report</text>
+<text x="792" y="555" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">pseudonymized, not anonymous</text>
+<path d="M 720 315 L 720 350 L 370 350 L 370 395" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+<path d="M 670 498 L 770 498" stroke="#7dd3fc" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="70" y="665" width="1300" height="215" rx="16" fill="#0b1626" stroke="#334a62" stroke-width="2"/>
+<text x="94" y="704" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="18" font-weight="700" fill="#f8fbff">Exact source inventory</text>
+<text x="94" y="739" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#9fb7cc">netveil, netveil.cli, netveil.model, netveil.parser, netveil.privacy</text>
+<text x="94" y="792" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#fbbf24">Trust-root legend</text>
+<text x="94" y="823" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">amber = executes before or supplies the mutable consistency boundary</text>
+<text x="760" y="792" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="16" font-weight="700" fill="#67e8f9">Verified-byte legend</text>
+<text x="760" y="823" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#c7d3e0">cyan / blue = checked before compilation by the supported installed path</text>
+<text x="70" y="935" text-anchor="start" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#6f8aa3">Reproduce: python3 tools/render_architecture.py --check</text>
+<text x="1370" y="935" text-anchor="end" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="14" font-weight="400" fill="#6f8aa3">No network data or endpoint fixture is used by this diagram</text>
+</svg>

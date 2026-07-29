@@ -83,11 +83,11 @@ canonicalization, and scope classification:
 - the exact Python `major.minor.micro` version; and
 - endpoint semantics `python-stdlib-ipaddress`.
 
-The same payload and key are byte-deterministic under the same runtime profile.
-Python's stdlib `ipaddress` classifications have changed between interpreter
-versions, so reports with different runtime profiles are not claimed to be
-byte-identical. The profile is inside the report-digest boundary rather than
-being ambient metadata.
+The same payload and key are byte-deterministic under the same runtime profile
+and exact protocol implementation. Python's stdlib `ipaddress`
+classifications have changed between interpreter versions, so reports with
+different runtime profiles are not claimed to be byte-identical. The profile
+is inside the report-digest boundary rather than being ambient metadata.
 
 The receipt calculates:
 
@@ -98,7 +98,9 @@ report_sha256 = SHA256(canonical_public_report_bytes)
 It then embeds both the report object and that lowercase digest. The digest
 input is the standalone public report, which has no digest field; this avoids
 self-reference. The digest is content-addressing metadata, not a signature or
-proof of provenance.
+proof of provenance. The receipt schema does not identify a source commit,
+wheel digest, distribution version, interpreter executable hash, or external
+evidence manifest.
 
 The public identifiers declare
 `netveil.hmac-sha256-pseudonymization.v1`; the report and receipt declare

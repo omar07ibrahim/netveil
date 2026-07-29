@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "netveil-audit"
-version = "0.2.0"
+version = "0.3.0"
 description = "Offline privacy-preserving audits for network-endpoint corpora"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -16,6 +16,8 @@ dependencies = []
 [tool.setuptools]
 package-dir = {"" = "src"}
 packages = ["netveil"]
+py-modules = ["netveil_bootstrap"]
+script-files = ["scripts/netveil-audit"]
 
 [tool.setuptools.package-data]
 netveil = ["py.typed"]
@@ -27,11 +29,11 @@ target-version = "py311"
 [tool.mypy]
 python_version = "3.11"
 strict = true
-files = ["src", "tests"]
+files = ["src", "tests", "tools", "scripts/netveil-audit"]
 
 [tool.coverage.run]
 branch = true
-source = ["netveil"]
+source = ["src", "scripts"]
 
 [tool.coverage.report]
 fail_under = 99
