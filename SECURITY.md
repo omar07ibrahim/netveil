@@ -2,15 +2,21 @@
 
 ## Supported state
 
-Netveil is in rehabilitation phase 0 and has no released executable yet.
-Security fixes target the default branch and the latest open rehabilitation
-pull request.
+Netveil is in rehabilitation phase 1. It ships an offline parser library but
+no command-line scanner, network probe, or stable release. Security fixes
+target the default branch and the latest open rehabilitation pull request.
 
 ## Data handling
 
-Do not submit real credentials, access tokens, private network addresses, or
-third-party endpoint inventories in an issue or pull request. Use the future
-synthetic fixtures when demonstrating a parser or report.
+Do not submit real credentials, access tokens, private-network inventories, or
+third-party endpoint inventories in an issue or pull request. Use IETF
+documentation ranges or clearly synthetic special-use addresses when
+demonstrating the parser.
+
+Phase-1 `Endpoint` and `EndpointCorpus` objects retain raw canonical addresses.
+They are not anonymized and must not be logged, published, or attached to an
+issue when created from a real corpus. Redacted exceptions protect error
+messages only; irreversible report identifiers are a future phase.
 
 The historical repository contains unverified public endpoint strings. Their
 presence does not grant permission to connect to, probe, or test those systems.

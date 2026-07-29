@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools==83.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netveil-audit"
+version = "0.1.0"
+description = "Offline fail-closed parser for network-endpoint corpora"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Omar Ibrahim"}]
+dependencies = []
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["netveil"]
+
+[tool.setuptools.package-data]
+netveil = ["py.typed"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src", "tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["netveil"]
+
+[tool.coverage.report]
+fail_under = 99
+precision = 2
+show_missing = true
