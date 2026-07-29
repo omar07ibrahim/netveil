@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+dist/
+build/
+
+# Raw endpoint corpora may contain third-party infrastructure and stay local.
+*.endpoints
+data/raw/
