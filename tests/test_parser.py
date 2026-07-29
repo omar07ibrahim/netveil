@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import ipaddress
 import socket
+import traceback
 import unittest
 from unittest.mock import patch
 
@@ -196,6 +197,23 @@ class EndpointParserFailureTests(unittest.TestCase):
                     forbidden=forbidden,
                 )
 
+    def test_invalid_address_creates_no_library_exception_context(self) -> None:
+        payload = b"PRIVATE-ENDPOINT-VALUE:443\n"
+
+        with self.assertRaises(EndpointParseError) as raised:
+            parse_corpus(payload)
+
+        error = raised.exception
+        rendered = "".join(
+            traceback.format_exception(type(error), error, error.__traceback__)
+        )
+        self.assertEqual(error.code, EndpointParseErrorCode.INVALID_ADDRESS)
+        self.assertIsNone(error.__context__)
+        self.assertIsNone(error.__cause__)
+        self.assertNotIn("PRIVATE-ENDPOINT-VALUE", repr(error))
+        self.assertNotIn("PRIVATE-ENDPOINT-VALUE", rendered)
+        self.assertNotIn("AddressValueError", rendered)
+
     def test_rejects_invalid_and_noncanonical_ports(self) -> None:
         cases = (
             (b"192.0.2.1:0\n", EndpointParseErrorCode.INVALID_PORT),
@@ -239,6 +257,23 @@ class EndpointParserFailureTests(unittest.TestCase):
                     EndpointParseErrorCode.INVALID_LINE_ENDING,
                     line_number=None,
                 )
+
+    def test_invalid_utf8_creates_no_library_exception_context(self) -> None:
+        payload = b"PRIVATE-CORPUS-\xff-DO-NOT-ECHO"
+
+        with self.assertRaises(EndpointParseError) as raised:
+            parse_corpus(payload)
+
+        error = raised.exception
+        rendered = "".join(
+            traceback.format_exception(type(error), error, error.__traceback__)
+        )
+        self.assertEqual(error.code, EndpointParseErrorCode.INVALID_UTF8)
+        self.assertIsNone(error.__context__)
+        self.assertIsNone(error.__cause__)
+        self.assertNotIn(repr(payload), repr(error))
+        self.assertNotIn("PRIVATE-CORPUS", rendered)
+        self.assertNotIn("UnicodeDecodeError", rendered)
 
     def test_enforces_resource_bounds(self) -> None:
         self.assert_rejected(

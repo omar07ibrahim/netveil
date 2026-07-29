@@ -17,7 +17,10 @@ demonstrating the parser.
 `Endpoint` and `EndpointCorpus` objects retain raw canonical addresses, and
 the corpus model retains an unkeyed source SHA-256. They must not be logged,
 published, or attached to an issue when created from a real corpus. Redacted
-exceptions protect error messages only.
+parser exceptions protect the library-owned payload and do not create a
+`UnicodeDecodeError` or address-parser context retaining rejected input.
+Caller objects, ambient exception context, traceback frame locals, debuggers,
+and crash dump tooling remain outside that boundary.
 
 `build_privacy_report` and `build_privacy_receipt` keep those raw values out of
 their returned models. Their source-content and duplicate-group identifiers

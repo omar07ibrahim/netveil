@@ -64,6 +64,12 @@ Python cannot reliably zeroize the caller's input, key, or intermediate
 objects. The caller owns key generation, access control, versioning, rotation,
 retention, and process isolation. Never hard-code or commit a production key.
 
+Parser failures use bounded codes and line numbers. Their library-created
+payload and exception context do not retain a rejected endpoint or undecodable
+corpus. Caller-owned input objects, ambient exception context, traceback frame
+locals, debuggers, and crash dump tooling remain outside that boundary and can
+still retain sensitive bytes.
+
 ## Quick check
 
 ```bash

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ipaddress
 import re
+from contextlib import suppress
 from enum import Enum
 from typing import NoReturn
 
@@ -100,9 +101,10 @@ def _parse_endpoint(raw_line: str, *, line_number: int) -> Endpoint:
     raw_port = match.group("port")
     if "%" in raw_address:
         _fail(EndpointParseErrorCode.INVALID_ADDRESS, line_number=line_number)
-    try:
+    parsed_address: ipaddress.IPv4Address | ipaddress.IPv6Address | None = None
+    with suppress(ValueError):
         parsed_address = ipaddress.ip_address(raw_address)
-    except ValueError:
+    if parsed_address is None:
         _fail(EndpointParseErrorCode.INVALID_ADDRESS, line_number=line_number)
 
     if (ipv6_match is not None) != isinstance(
@@ -126,9 +128,10 @@ def parse_corpus(payload: bytes) -> EndpointCorpus:
         _fail(EndpointParseErrorCode.INPUT_TOO_LARGE)
     if b"\r" in payload.replace(b"\r\n", b""):
         _fail(EndpointParseErrorCode.INVALID_LINE_ENDING)
-    try:
+    text: str | None = None
+    with suppress(UnicodeDecodeError):
         text = payload.decode("utf-8", errors="strict")
-    except UnicodeDecodeError:
+    if text is None:
         _fail(EndpointParseErrorCode.INVALID_UTF8)
     if any(character in _NON_LF_LINE_SEPARATORS for character in text):
         _fail(EndpointParseErrorCode.INVALID_LINE_ENDING)
