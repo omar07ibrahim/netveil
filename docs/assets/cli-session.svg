@@ -22,7 +22,7 @@
 <circle cx="97" cy="142" r="6" fill="#f59e0b"/>
 <circle cx="118" cy="142" r="6" fill="#34d399"/>
 <text x="72" y="180" class="mono" fill="#f4f8ff">Netveil installed-wheel public demonstration</text>
-<text x="72" y="201" class="mono" fill="#f4f8ff">source commit: 99376a09f2b0dc649238382a49bae57d225a3184</text>
+<text x="72" y="201" class="mono" fill="#f4f8ff">source commit: d777e9112507bc612f330b6cd8a7d6d271423cec</text>
 <text x="72" y="222" class="mono" fill="#f4f8ff">input class: synthetic IETF documentation ranges</text>
 <text x="72" y="243" class="mono" fill="#f4f8ff">key class: public non-secret test material</text>
 <text x="72" y="264" class="mono" fill="#f4f8ff"></text>
