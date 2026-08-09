@@ -115,16 +115,16 @@ jobs:
           python tools/render_architecture.py --check
           python tools/render_evidence.py
           python tools/render_evidence.py --check
-          python tools/render_raster_evidence.py
-          python tools/render_raster_evidence.py --check
+          python -m tools.render_raster_evidence
+          python -m tools.render_raster_evidence --check
           first="$RUNNER_TEMP/raster-first.sha256"
           sha256sum \
             docs/assets/cli-session.png \
             docs/assets/verification-summary.png \
             docs/assets/workflow-demo.gif \
             docs/evidence/raster-manifest.json > "$first"
-          python tools/render_raster_evidence.py
-          python tools/render_raster_evidence.py --check
+          python -m tools.render_raster_evidence
+          python -m tools.render_raster_evidence --check
           sha256sum --check --strict "$first"
 
       - name: Prove the closed publication set
