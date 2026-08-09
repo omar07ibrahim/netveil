@@ -15,12 +15,12 @@
     "pip-tools": "7.6.0"
   },
   "lock": {
-    "bytes": 25463,
+    "bytes": 32873,
     "path": "requirements-ci-py312.lock",
-    "sha256": "ed3a703e70d6e27fb7bd67fa3ade97834cd82b7d608c069640e803cddc294f25"
+    "sha256": "7b64bbabcb738bb0234751f30a4c51551a2e6bec996d4c13cd6418be2702894c"
   },
   "repository": "omar07ibrahim/Hello-World",
-  "revision": "d04ce0153242bd4eb73fcc36e9b3e2fcfde10269",
+  "revision": "f6312f96526963d5360ae54252b1443e2cd1e7c9",
   "runtime": {
     "implementation": "CPython",
     "machine": "x86_64",
@@ -30,16 +30,16 @@
   "schema": "netveil.dependency-lock-candidate/v1",
   "sources": {
     ".github/workflows/dependency-lock-candidate.yml": {
-      "bytes": 8093,
-      "sha256": "05ee75a19f95a94860a053a5aeea424af550ed3bce2fd211f42c4ecf2d2bbea6"
+      "bytes": 8155,
+      "sha256": "bab69312ae2eb62863db27d59d0f225017efb9cd8851e741892ce56dc1368815"
     },
     "pyproject.toml": {
       "bytes": 1445,
       "sha256": "af21a11f116f31b5f0783934e1583ac1984f4c8f7dea0512812168ae47248299"
     },
     "requirements-dev.txt": {
-      "bytes": 348,
-      "sha256": "6ca7f1739fb5f044210252ca5e6893bc1fee5ceb30130aaa44731738d253cef4"
+      "bytes": 363,
+      "sha256": "59baa1c2ac5a69ead42d9fd8fdd784f88d60ac732442c37b553549f77002a2d4"
     }
   },
   "verification": {
