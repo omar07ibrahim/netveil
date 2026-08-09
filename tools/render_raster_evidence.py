@@ -557,7 +557,10 @@ def render_bundle(
 def _read_input(path: Path, label: str) -> bytes:
     try:
         status = path.lstat()
-        if not stat.S_ISREG(status.st_mode) or not 0 < status.st_size <= MAX_INPUT_BYTES:
+        if (
+            not stat.S_ISREG(status.st_mode)
+            or not 0 < status.st_size <= MAX_INPUT_BYTES
+        ):
             _fail(f"{label} is not one bounded regular file")
         payload = path.read_bytes()
     except OSError as error:
