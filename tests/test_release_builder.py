@@ -118,6 +118,27 @@ def _initialize_repository(project: Path) -> str:
 
 
 class ReleaseBuilderTests(unittest.TestCase):
+    def test_new_release_files_begin_owner_only_before_final_mode(self) -> None:
+        observed_creation_modes: list[int] = []
+        real_open = os.open
+
+        def guarded_open(path: Path, flags: int, mode: int = 0o777) -> int:
+            observed_creation_modes.append(mode)
+            return real_open(path, flags, mode)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            destination = Path(temporary) / "launcher"
+            with patch("tools.build_release.os.open", side_effect=guarded_open):
+                build_release._write_new_file(
+                    destination,
+                    b"release bytes\n",
+                    mode=0o755,
+                )
+
+            self.assertEqual(observed_creation_modes, [0o600])
+            self.assertEqual(destination.read_bytes(), b"release bytes\n")
+            self.assertEqual(destination.stat().st_mode & 0o777, 0o755)
+
     def test_logically_identical_sdists_normalize_byte_identically(self) -> None:
         first = _gzip_tar(
             _safe_members(),

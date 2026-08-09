@@ -320,7 +320,7 @@ def _write_new_file(path: Path, payload: bytes, *, mode: int = 0o644) -> None:
         descriptor = os.open(
             path,
             os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_CLOEXEC | os.O_NOFOLLOW,
-            mode,
+            0o600,
         )
         created = True
         offset = 0
