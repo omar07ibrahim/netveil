@@ -102,6 +102,12 @@ not a typed mockup. The same capture is committed as an
 [asciinema v2 terminal recording](docs/evidence/cli-session.cast); replay it
 with `asciinema play docs/evidence/cli-session.cast`._
 
+![Raster terminal view of the same installed-wheel stdout](docs/assets/cli-session.png)
+
+_The PNG is rendered from the exact committed terminal cast under the pinned
+Pillow runtime. It is a raster evidence view of real CLI output, not an OS
+window screenshot and not a hand-authored terminal mockup._
+
 ## How the guard works
 
 ![Code-derived Netveil installed execution boundary](docs/assets/architecture.svg)
@@ -126,6 +132,12 @@ local corpus + owner-only key
   ▼
 canonical pseudonymized receipt on stdout
 ```
+
+![Six-frame replay of the verified build, installed command, receipt, trace, and checks](docs/assets/workflow-demo.gif)
+
+_This once-through animation is generated from the fresh-wheel verification
+record. Every frame is bound to the same synthetic receipt and source revision;
+it is workflow evidence, not a benchmark or a claim about live endpoints._
 
 The static launcher closes the earlier `PYTHONPATH`, `sitecustomize`, and
 unchecked-bootstrap-`pyc` gap of a generated console wrapper. The package
@@ -203,7 +215,9 @@ guarded CLI contract.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/python -m pip install --requirement requirements-dev.txt
+.venv/bin/python -m pip install \
+  --require-hashes \
+  --requirement requirements-ci-py312.lock
 .venv/bin/python -m pip install --no-build-isolation --no-deps --editable .
 
 .venv/bin/ruff check .
@@ -213,9 +227,12 @@ python3 -m venv .venv
 .venv/bin/coverage report -m
 ```
 
-`requirements-dev.txt` pins the additional Python development packages used
-by this repository on CPython 3.12/Linux. It is not a runtime dependency set
-or a cross-platform, hash-locked software-supply-chain attestation.
+`requirements-dev.txt` is the human-reviewed input list. The committed
+`requirements-ci-py312.lock` is the CI installation contract: 14 exact package
+pins and 383 SHA-256 file hashes, generated twice and installed with
+`--require-hashes` on CPython 3.12.3/Linux. The adjacent provenance JSON binds
+the lock generator, source inputs, and validation run; this remains a bounded
+environment record, not a universal supply-chain attestation.
 
 The current source gate covers the extensionless launcher, bootstrap, CLI,
 parser, models, and privacy protocol at 100% statement and branch coverage.
@@ -262,15 +279,21 @@ checks; and emits one path-free canonical JSON line.
 
 ![Fresh-wheel verification matrix](docs/assets/verification-matrix.svg)
 
-The committed snapshot records exact source commit
-`f3e4db737c4fd87b4b58f842a926ebb0f9889e69`: all 19 verifier checks passed,
-both normalized Linux traces recorded zero network syscalls and zero
-post-launch child processes, and the installed launcher and `RECORD` identities
-were captured. Inspect the canonical
+![Raster summary of receipt counts, syscall observations, and verifier checks](docs/assets/verification-summary.png)
+
+_The summary plots recorded facts from one synthetic run. In particular, two
+zero-network syscall observations do not prove that every possible execution
+can never use a network._
+
+The committed machine-readable manifests record the exact source revision used
+for the bundle. All 19 verifier checks passed, both normalized Linux traces
+recorded zero network syscalls and zero post-launch child processes, and the
+installed launcher and `RECORD` identities were captured. Inspect the canonical
 [release inventory](docs/evidence/release-inventory.json), the [fresh-wheel
-verification record](docs/evidence/fresh-wheel-verification.json), and the
-[visual manifest](docs/evidence/visual-manifest.json) rather than trusting the
-rendered summary alone.
+verification record](docs/evidence/fresh-wheel-verification.json), the [vector
+manifest](docs/evidence/visual-manifest.json), and the [raster
+manifest](docs/evidence/raster-manifest.json) rather than trusting a rendered
+summary alone.
 
 `docs/evidence` is deliberately repository-only. Embedding an inventory that
 hashes the sdist inside that same sdist would be self-referential; publish the
@@ -315,3 +338,8 @@ that any service is live and not authorization to connect to it.
 Use only caller-owned data, explicitly redistributable fixtures, or IETF
 documentation ranges in examples and issues. See [SECURITY.md](SECURITY.md)
 for disclosure and sensitive-data handling guidance.
+The MIT license covers the current Netveil code and documentation authored for
+this rehabilitation. It does not assert ownership of, grant rights to, or
+relicense the removed historical endpoint lists that remain reachable only in
+Git history.
+

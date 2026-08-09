@@ -1,0 +1,288 @@
+name: Record release evidence
+
+on:
+  push:
+    branches:
+      - master
+      - agent/remove-legacy-endpoints
+    paths:
+      - .github/workflows/record-release-evidence.yml
+      - README.md
+      - SECURITY.md
+      - LICENSE
+      - MANIFEST.in
+      - pyproject.toml
+      - requirements-dev.txt
+      - requirements-ci-py312.lock
+      - requirements-ci-py312.provenance.json
+      - scripts/**
+      - src/**
+      - tools/**
+      - docs/*.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: record-release-evidence-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  PIP_NO_INPUT: "1"
+  PYTHONDONTWRITEBYTECODE: "1"
+  PYTHONHASHSEED: "0"
+
+jobs:
+  record:
+    name: Build and render exact release evidence
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Check out the immutable event revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          ref: ${{ github.sha }}
+
+      - name: Set up the evidence runtime
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12.3"
+          cache: pip
+          cache-dependency-path: requirements-ci-py312.lock
+
+      - name: Assert the capture boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = "omar07ibrahim/Hello-World"
+          case "$GITHUB_EVENT_NAME" in
+            push|workflow_dispatch) ;;
+            *) exit 1 ;;
+          esac
+          test "$GITHUB_REF" = "refs/heads/master" ||
+            test "$GITHUB_REF" = "refs/heads/agent/remove-legacy-endpoints"
+          [[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(python -c 'import platform; print(platform.python_version())')" = "3.12.3"
+          command -v strace >/dev/null
+          test -z "${OPENAI_API_KEY:-}"
+          test -z "${NETVEIL_KEY:-}"
+          test "$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)" = ""
+
+      - name: Install only the hash-locked environment
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install \
+            --require-hashes \
+            --requirement requirements-ci-py312.lock
+          test "$(python -m pip --version | awk '{print $2}')" = "26.1.2"
+          python -m pip check
+
+      - name: Build and verify the exact release
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/release"
+          epoch="$(git show -s --format=%ct "$GITHUB_SHA")"
+          python tools/build_release.py \
+            "$GITHUB_WORKSPACE" \
+            "$out" \
+            --source-date-epoch "$epoch" \
+            --python "$(command -v python)"
+          python tools/verify_fresh_wheel.py \
+            --source-commit "$GITHUB_SHA" \
+            --inventory "$out/release-inventory.json" \
+            --sdist "$out/netveil_audit-0.3.0.tar.gz" \
+            "$out/netveil_audit-0.3.0-py3-none-any.whl" \
+            > "$out/fresh-wheel-verification.json"
+
+      - name: Render the evidence bundle twice
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/release"
+          install -m 0644 \
+            "$out/release-inventory.json" \
+            docs/evidence/release-inventory.json
+          install -m 0644 \
+            "$out/fresh-wheel-verification.json" \
+            docs/evidence/fresh-wheel-verification.json
+          python tools/render_architecture.py --check
+          python tools/render_evidence.py
+          python tools/render_evidence.py --check
+          python tools/render_raster_evidence.py
+          python tools/render_raster_evidence.py --check
+          first="$RUNNER_TEMP/raster-first.sha256"
+          sha256sum \
+            docs/assets/cli-session.png \
+            docs/assets/verification-summary.png \
+            docs/assets/workflow-demo.gif \
+            docs/evidence/raster-manifest.json > "$first"
+          python tools/render_raster_evidence.py
+          python tools/render_raster_evidence.py --check
+          sha256sum --check --strict "$first"
+
+      - name: Prove the closed publication set
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PYTHON'
+          import subprocess
+
+          allowed = {
+              "docs/assets/artifact-provenance.svg",
+              "docs/assets/cli-session.png",
+              "docs/assets/cli-session.svg",
+              "docs/assets/receipt-counts.svg",
+              "docs/assets/verification-matrix.svg",
+              "docs/assets/verification-summary.png",
+              "docs/assets/workflow-demo.gif",
+              "docs/evidence/cli-session.cast",
+              "docs/evidence/fresh-wheel-verification.json",
+              "docs/evidence/raster-manifest.json",
+              "docs/evidence/release-inventory.json",
+              "docs/evidence/visual-manifest.json",
+          }
+          raw = subprocess.check_output(
+              [
+                  "git",
+                  "status",
+                  "--porcelain=v1",
+                  "-z",
+                  "--untracked-files=all",
+                  "--ignore-submodules=none",
+              ]
+          )
+          observed = {
+              record[3:].decode("utf-8")
+              for record in raw.split(b"\0")
+              if record
+          }
+          unexpected = observed - allowed
+          required_new = {
+              "docs/assets/cli-session.png",
+              "docs/assets/verification-summary.png",
+              "docs/assets/workflow-demo.gif",
+              "docs/evidence/raster-manifest.json",
+          }
+          if unexpected or not required_new <= observed:
+              raise SystemExit(
+                  f"unexpected={sorted(unexpected)!r}; "
+                  f"missing_new={sorted(required_new - observed)!r}"
+              )
+          PYTHON
+
+      - name: Pack source-bound publication evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          bundle="$RUNNER_TEMP/publication"
+          mkdir -m 700 "$bundle"
+          for path in \
+            docs/assets/architecture.svg \
+            docs/assets/artifact-provenance.svg \
+            docs/assets/cli-session.png \
+            docs/assets/cli-session.svg \
+            docs/assets/receipt-counts.svg \
+            docs/assets/verification-matrix.svg \
+            docs/assets/verification-summary.png \
+            docs/assets/workflow-demo.gif \
+            docs/evidence/cli-session.cast \
+            docs/evidence/fresh-wheel-verification.json \
+            docs/evidence/raster-manifest.json \
+            docs/evidence/release-inventory.json \
+            docs/evidence/visual-manifest.json
+          do
+            install -D -m 0644 "$path" "$bundle/$path"
+          done
+          install -D -m 0644 \
+            "$RUNNER_TEMP/release/netveil_audit-0.3.0-py3-none-any.whl" \
+            "$bundle/release/netveil_audit-0.3.0-py3-none-any.whl"
+          install -D -m 0644 \
+            "$RUNNER_TEMP/release/netveil_audit-0.3.0.tar.gz" \
+            "$bundle/release/netveil_audit-0.3.0.tar.gz"
+          BUNDLE="$bundle" python - <<'PYTHON'
+          import hashlib
+          import importlib.metadata
+          import json
+          import os
+          import platform
+          import re
+          from pathlib import Path
+
+          root = Path(os.environ["BUNDLE"])
+          files = sorted(path for path in root.rglob("*") if path.is_file())
+          if any(path.is_symlink() for path in root.rglob("*")):
+              raise SystemExit("publication bundle contains a symlink")
+          raster = json.loads(
+              (root / "docs/evidence/raster-manifest.json").read_bytes()
+          )
+          vector = json.loads(
+              (root / "docs/evidence/visual-manifest.json").read_bytes()
+          )
+          if raster["source_commit"] != os.environ["GITHUB_SHA"]:
+              raise SystemExit("raster source revision drift")
+          if vector["source_commit"] != os.environ["GITHUB_SHA"]:
+              raise SystemExit("vector source revision drift")
+          textual = {
+              ".cast",
+              ".json",
+              ".svg",
+              ".txt",
+          }
+          credential_patterns = (
+              re.compile(rb"(?:AKIA|ASIA)[0-9A-Z]{16}"),
+              re.compile(rb"gh[pousr]_[A-Za-z0-9_]{30,}"),
+              re.compile(rb"xox[baprs]-[A-Za-z0-9-]{20,}"),
+              re.compile(rb"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"),
+              re.compile(rb"https?://[^/@\\s:]+:[^/@\\s]+@", re.I),
+          )
+          for path in files:
+              if path.suffix in textual:
+                  payload = path.read_bytes()
+                  payload.decode("utf-8")
+                  if b"/home/runner/" in payload or b"/Users/" in payload:
+                      raise SystemExit("publication contains a private path")
+                  if any(pattern.search(payload) for pattern in credential_patterns):
+                      raise SystemExit("publication contains a credential-shaped value")
+          document = {
+              "claim_boundary": (
+                  "synthetic local release evidence; not endpoint reachability, "
+                  "authorization, anonymity, publisher authentication, or host attestation"
+              ),
+              "files": {
+                  path.relative_to(root).as_posix(): {
+                      "bytes": path.stat().st_size,
+                      "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                  }
+                  for path in files
+              },
+              "repository": os.environ["GITHUB_REPOSITORY"],
+              "runtime": {
+                  "pillow": importlib.metadata.version("Pillow"),
+                  "python": platform.python_version(),
+              },
+              "schema": "netveil.publication-evidence/v1",
+              "source_commit": os.environ["GITHUB_SHA"],
+          }
+          (root / "publication-manifest.json").write_text(
+              json.dumps(document, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PYTHON
+          test -z "$(find "$bundle" -type l -print -quit)"
+
+      - name: Upload the immutable evidence candidate
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: netveil-release-evidence-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/publication/
+          if-no-files-found: error
+          include-hidden-files: false
+          compression-level: 0
+          retention-days: 14

@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from xml.etree import ElementTree
 
-from tools import render_architecture, render_evidence
+from tools import render_architecture, render_evidence, render_raster_evidence
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -56,7 +56,9 @@ class VisualEvidenceTests(unittest.TestCase):
         expected_links = {
             "docs/assets/architecture.svg",
             *render_evidence.VISUAL_OUTPUT_PATHS,
+            *render_raster_evidence.RASTER_OUTPUT_PATHS,
             render_evidence.MANIFEST_PATH,
+            render_raster_evidence.MANIFEST_PATH,
             "docs/evidence/fresh-wheel-verification.json",
             "docs/evidence/release-inventory.json",
         }
