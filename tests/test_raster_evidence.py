@@ -41,7 +41,10 @@ class RasterEvidenceTests(unittest.TestCase):
         ) as animation:
             self.assertEqual(animation.format, "GIF")
             self.assertEqual(animation.size, (1280, 720))
-            self.assertEqual(getattr(animation, "n_frames"), 6)
+            animation.seek(5)
+            self.assertEqual(animation.tell(), 5)
+            with self.assertRaises(EOFError):
+                animation.seek(6)
 
         manifest = json.loads(outputs[render_raster_evidence.MANIFEST_PATH])
         self.assertEqual(manifest["schema"], render_raster_evidence.SCHEMA)
