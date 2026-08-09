@@ -58,7 +58,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "$GITHUB_REPOSITORY" = "omar07ibrahim/Hello-World"
+          case "$GITHUB_REPOSITORY" in
+            omar07ibrahim/Hello-World|omar07ibrahim/netveil) ;;
+            *) exit 1 ;;
+          esac
           case "$GITHUB_EVENT_NAME" in
             push|workflow_dispatch) ;;
             *) exit 1 ;;

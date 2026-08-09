@@ -24,9 +24,9 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/omar07ibrahim/Hello-World#readme"
-Issues = "https://github.com/omar07ibrahim/Hello-World/issues"
-Repository = "https://github.com/omar07ibrahim/Hello-World"
+Documentation = "https://github.com/omar07ibrahim/netveil#readme"
+Issues = "https://github.com/omar07ibrahim/netveil/issues"
+Repository = "https://github.com/omar07ibrahim/netveil"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

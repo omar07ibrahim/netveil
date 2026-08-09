@@ -55,7 +55,7 @@ class PackagingContractTests(unittest.TestCase):
         self.assertEqual(project["authors"], [{"name": "Omar Ibrahim"}])
         self.assertEqual(
             project["urls"]["Repository"],
-            "https://github.com/omar07ibrahim/Hello-World",
+            "https://github.com/omar07ibrahim/netveil",
         )
         self.assertIn("Typing :: Typed", project["classifiers"])
 
