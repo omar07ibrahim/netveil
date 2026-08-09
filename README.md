@@ -11,8 +11,8 @@ already-pinned bytes, and omits raw endpoints, caller paths, key material, and
 unkeyed corpus hashes from its successful receipt and Python-handled Netveil
 diagnostics.
 
-> **Status:** 0.3.0 is a release candidate on the rehabilitation pull-request
-> branch, not a published stable release. The guarded command has been
+> **Status:** 0.3.0 is the hardened repository release represented by this
+> tree; no package-index publication is claimed. The guarded command has been
 > exercised on CPython 3.12.3 / Linux x86-64. See the exact
 > [artifact boundary](docs/artifact-boundary.md) before relying on it.
 
@@ -310,6 +310,9 @@ cp -- "$OUT/fresh-wheel-verification.json" \
 
 .venv/bin/python tools/render_evidence.py
 .venv/bin/python tools/render_evidence.py --check
+
+.venv/bin/python -m tools.render_raster_evidence
+.venv/bin/python -m tools.render_raster_evidence --check
 ```
 
 Repeat the build into a second nonexistent sibling directory and compare the

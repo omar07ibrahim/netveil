@@ -89,6 +89,7 @@ jobs:
           mypy --cache-dir "$RUNNER_TEMP/mypy-cache"
           python tools/render_architecture.py --check
           python tools/render_evidence.py --check
+          python -m tools.render_raster_evidence --check
           test "$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)" = ""
 
   release:
