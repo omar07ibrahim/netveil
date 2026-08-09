@@ -460,7 +460,7 @@ def _render_workflow(facts: render_evidence.EvidenceFacts) -> bytes:
             title="Run the guarded installed command",
             kicker="The recorded stdout comes from the verified wheel.",
             items=(
-                f"$ netveil-audit --version  →  {facts.version_stdout.strip()}",
+                f"$ netveil-audit --version -> {facts.version_stdout.strip()}",
                 "$ netveil-audit receipt documentation-corpus.txt --key-file …",
                 "Only synthetic IETF documentation ranges enter this replay.",
             ),
