@@ -19,8 +19,8 @@
 <text x="48" y="86" class="subtitle">19 exact checks reported pass by the committed verifier JSON.</text>
 <rect x="48" y="120" width="1344" height="120" rx="14" class="panel"/>
 <text x="78" y="160" class="label">cpython 3.12.3 · cpython-312</text>
-<text x="78" y="194" class="small">Linux 6.17.0-1019-aws · x86_64</text>
-<text x="1360" y="160" text-anchor="end" class="mono">f3e4db737c4fd87b4b58f842a926ebb0f9889e69</text>
+<text x="78" y="194" class="small">Linux 6.17.0-1020-azure · x86_64</text>
+<text x="1360" y="160" text-anchor="end" class="mono">99376a09f2b0dc649238382a49bae57d225a3184</text>
 <text x="1360" y="194" text-anchor="end" class="warn">unsigned consistency evidence · not attestation</text>
 <rect x="48" y="270" width="420" height="42" rx="10" class="panel-alt"/>
 <circle cx="70" cy="291" r="7" fill="#86efac"/>
