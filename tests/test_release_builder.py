@@ -122,7 +122,7 @@ class ReleaseBuilderTests(unittest.TestCase):
         observed_creation_modes: list[int] = []
         real_open = os.open
 
-        def guarded_open(path: Path, flags: int, mode: int = 0o777) -> int:
+        def guarded_open(path: Path, flags: int, mode: int) -> int:
             observed_creation_modes.append(mode)
             return real_open(path, flags, mode)
 
