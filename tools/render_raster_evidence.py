@@ -113,7 +113,6 @@ def _gif_bytes(frames: Sequence[Image.Image]) -> bytes:
         save_all=True,
         append_images=list(frames[1:]),
         duration=(900, 900, 1050, 1250, 1050, 1400),
-        loop=0,
         disposal=2,
         optimize=False,
     )

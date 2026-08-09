@@ -36,11 +36,12 @@ class RasterEvidenceTests(unittest.TestCase):
                 self.assertEqual(image.format, "PNG")
                 self.assertEqual(image.size, expected_size)
 
-        with Image.open(
-            io.BytesIO(outputs[render_raster_evidence.WORKFLOW_GIF_PATH])
-        ) as animation:
+        workflow = outputs[render_raster_evidence.WORKFLOW_GIF_PATH]
+        self.assertNotIn(b"NETSCAPE2.0", workflow)
+        with Image.open(io.BytesIO(workflow)) as animation:
             self.assertEqual(animation.format, "GIF")
             self.assertEqual(animation.size, (1280, 720))
+            self.assertNotIn("loop", animation.info)
             animation.seek(5)
             self.assertEqual(animation.tell(), 5)
             with self.assertRaises(EOFError):
