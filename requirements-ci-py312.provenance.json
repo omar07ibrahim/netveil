@@ -1,0 +1,56 @@
+{
+  "generator": {
+    "arguments": [
+      "--allow-unsafe",
+      "--generate-hashes",
+      "--no-annotate",
+      "--no-config",
+      "--no-emit-index-url",
+      "--no-emit-trusted-host",
+      "--no-header",
+      "--resolver=backtracking",
+      "--strip-extras"
+    ],
+    "pip": "26.1.2",
+    "pip-tools": "7.6.0"
+  },
+  "lock": {
+    "bytes": 25463,
+    "path": "requirements-ci-py312.lock",
+    "sha256": "ed3a703e70d6e27fb7bd67fa3ade97834cd82b7d608c069640e803cddc294f25"
+  },
+  "repository": "omar07ibrahim/Hello-World",
+  "revision": "d04ce0153242bd4eb73fcc36e9b3e2fcfde10269",
+  "runtime": {
+    "implementation": "CPython",
+    "machine": "x86_64",
+    "python": "3.12.3",
+    "system": "Linux"
+  },
+  "schema": "netveil.dependency-lock-candidate/v1",
+  "sources": {
+    ".github/workflows/dependency-lock-candidate.yml": {
+      "bytes": 8093,
+      "sha256": "05ee75a19f95a94860a053a5aeea424af550ed3bce2fd211f42c4ecf2d2bbea6"
+    },
+    "pyproject.toml": {
+      "bytes": 1445,
+      "sha256": "af21a11f116f31b5f0783934e1583ac1984f4c8f7dea0512812168ae47248299"
+    },
+    "requirements-dev.txt": {
+      "bytes": 348,
+      "sha256": "6ca7f1739fb5f044210252ca5e6893bc1fee5ceb30130aaa44731738d253cef4"
+    }
+  },
+  "verification": {
+    "byte_identical": true,
+    "committed_visuals": true,
+    "complete_unittest_suite": true,
+    "coverage_gate": 99,
+    "fresh_compilations": 2,
+    "pip_check": true,
+    "require_hashes_install": true,
+    "ruff": true,
+    "strict_mypy": true
+  }
+}
