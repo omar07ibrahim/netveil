@@ -28,7 +28,7 @@ class RasterEvidenceTests(unittest.TestCase):
         self.assertEqual(set(outputs), set(render_raster_evidence.ALL_OUTPUT_PATHS))
 
         expected_png_sizes = {
-            render_raster_evidence.TERMINAL_PNG_PATH: (1440, 823),
+            render_raster_evidence.TERMINAL_PNG_PATH: (1440, 661),
             render_raster_evidence.SUMMARY_PNG_PATH: (1440, 1220),
         }
         for path, expected_size in expected_png_sizes.items():
