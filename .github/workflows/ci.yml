@@ -164,7 +164,26 @@ jobs:
           cmp \
             "$RUNNER_TEMP/release-a/release-inventory.json" \
             "$RUNNER_TEMP/release-b/release-inventory.json"
-          cmp \
-            "$RUNNER_TEMP/release-a/fresh-wheel-verification.json" \
-            "$RUNNER_TEMP/release-b/fresh-wheel-verification.json"
+          FIRST="$RUNNER_TEMP/release-a/fresh-wheel-verification.json" \
+          SECOND="$RUNNER_TEMP/release-b/fresh-wheel-verification.json" \
+          python - <<'PYTHON'
+          import json
+          import os
+          from pathlib import Path
+
+          first = json.loads(Path(os.environ["FIRST"]).read_bytes())
+          second = json.loads(Path(os.environ["SECOND"]).read_bytes())
+          for document in (first, second):
+              if document.get("status") != "pass":
+                  raise SystemExit("fresh-wheel verifier did not pass")
+              if document.get("source_commit") != os.environ["GITHUB_SHA"]:
+                  raise SystemExit("fresh-wheel verifier source drift")
+          # pip rewrites the installed launcher for each absolute venv path, so
+          # launcher/RECORD identities are expected to differ. Every portable
+          # claim and both independent verifier outcomes must remain identical.
+          first.pop("installed")
+          second.pop("installed")
+          if first != second:
+              raise SystemExit("path-independent verification claims differ")
+          PYTHON
           test "$(git status --porcelain=v1 --untracked-files=all --ignore-submodules=none)" = ""
