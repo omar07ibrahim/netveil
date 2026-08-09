@@ -20,16 +20,16 @@
 <rect x="48" y="140" width="306" height="190" rx="14" class="panel"/>
 <rect x="48" y="140" width="306" height="5" rx="3" fill="#67e8f9"/>
 <text x="70" y="182" class="label">1 · clean Git HEAD</text>
-<text x="70" y="222" class="mono-small">d777e9112507bc612f330b6cd8a7d6d271423cec</text>
-<text x="70" y="252" class="mono-small">SOURCE_DATE_EPOCH 1786238203</text>
+<text x="70" y="222" class="mono-small">25e306e9c8271320f12c55d508e86423b61fac08</text>
+<text x="70" y="252" class="mono-small">SOURCE_DATE_EPOCH 1786239158</text>
 <text x="70" y="300" class="pass">BUILDER-OBSERVED</text>
 <line x1="354" y1="235" x2="384" y2="235" stroke="#67e8f9" stroke-width="2"/>
 <path d="M384,229 L396,235 L384,241 Z" fill="#67e8f9"/>
 <rect x="390" y="140" width="306" height="190" rx="14" class="panel"/>
 <rect x="390" y="140" width="306" height="5" rx="3" fill="#c4b5fd"/>
 <text x="412" y="182" class="label">2 · bound release artifacts</text>
-<text x="412" y="222" class="mono-small">wheel · 26.8 KiB · f96bb0d98c872bbf03d6…</text>
-<text x="412" y="252" class="mono-small">sdist · 267.7 KiB · 58 members</text>
+<text x="412" y="222" class="mono-small">wheel · 26.8 KiB · e496b0ddde7da0ecb081…</text>
+<text x="412" y="252" class="mono-small">sdist · 266.9 KiB · 58 members</text>
 <text x="412" y="300" class="pass">BOUND IN EVIDENCE</text>
 <line x1="696" y1="235" x2="726" y2="235" stroke="#67e8f9" stroke-width="2"/>
 <path d="M726,229 L738,235 L726,241 Z" fill="#67e8f9"/>
@@ -50,8 +50,8 @@
 <rect x="48" y="380" width="1344" height="210" rx="14" class="panel-alt"/>
 <text x="78" y="425" class="label">Exact installed bindings</text>
 <text x="78" y="462" class="mono-small">launcher sha256  056f2721f16c78e7fe0c24cf91e277be6ac9a71858756775c4c1f4df038dd3ac</text>
-<text x="78" y="492" class="mono-small">RECORD sha256    a81b0f7b8532b07cb730d83b16ee99dbe17bcf9283c796575b00ea6196453b71</text>
-<text x="78" y="540" class="mono-small">inventory sha256 933c586998f626852c06b67692e0e8897285a3038e591bffd778418ebdc96df7</text>
+<text x="78" y="492" class="mono-small">RECORD sha256    981a6c5f9fa1738946ce5b17ed763f16489f169b0d5bbe3abb1778f580109eba</text>
+<text x="78" y="540" class="mono-small">inventory sha256 94345223c2b605d160563c786bd3e308851903728231699b062a63e5b95afee8</text>
 <rect x="48" y="630" width="1344" height="145" rx="14" class="panel"/>
 <text x="78" y="674" class="warn">Claim boundary</text>
 <text x="78" y="709" class="small">The manifest is unsigned. It shows internally consistent bytes and an executed test run; it does not prove publisher identity, an honest host, or an unmodified verifier.</text>
