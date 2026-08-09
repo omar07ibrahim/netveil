@@ -46,10 +46,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          case "$GITHUB_REPOSITORY" in
-            omar07ibrahim/Hello-World|omar07ibrahim/netveil) ;;
-            *) exit 1 ;;
-          esac
+          test "$GITHUB_REPOSITORY" = "omar07ibrahim/netveil"
           [[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           case "$GITHUB_EVENT_NAME" in
@@ -118,10 +115,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          case "$GITHUB_REPOSITORY" in
-            omar07ibrahim/Hello-World|omar07ibrahim/netveil) ;;
-            *) exit 1 ;;
-          esac
+          test "$GITHUB_REPOSITORY" = "omar07ibrahim/netveil"
           [[ "$GITHUB_SHA" =~ ^[0-9a-f]{40}$ ]]
           test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
           test "$(python -c 'import platform; print(platform.python_version())')" = "3.12.3"
