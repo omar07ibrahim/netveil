@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from __future__ import annotations
 
 import argparse
@@ -15,7 +16,8 @@ from collections.abc import Mapping, Sequence
 from pathlib import Path
 from typing import Any, NoReturn
 
-from PIL import Image, ImageDraw, ImageFont, __version__ as PILLOW_VERSION
+from PIL import Image, ImageDraw, ImageFont
+from PIL import __version__ as PILLOW_VERSION
 
 from tools import render_evidence
 
